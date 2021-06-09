@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.5)
+
+project(cross_compile)
+
+message(STATUS "CMAKE_SYSTEM_NAME:${CMAKE_SYSTEM_NAME}")
+message(STATUS "CMAKE_CROSSCOMPILING:${CMAKE_CROSSCOMPILING}")
+message(STATUS "CMAKE_C_COMPILER:${CMAKE_C_COMPILER}")
+message(STATUS "CMAKE_C_COMPILER:${CMAKE_CXX_COMPILER}")
+
+if(APPLE)
+	message("APPLE")
+	message("CMAKE_OSX_SYSROOT:${CMAKE_OSX_SYSROOT}")
+	if(CMAKE_GENERATOR MATCHES "Xcode")
+		if(${CMAKE_CROSSCOMPILING})
+			set(CMAKE_XCODE_ATTRIBUTE_SDKROOT iphoneos)
+		else()
+			set(CMAKE_XCODE_ATTRIBUTE_SDKROOT macosx)
+		endif()
+	endif()
+elseif(ANDROID)
+	message("ANDROID")
+elseif(MSVC)
+	message("MSVC")
+endif()
+
